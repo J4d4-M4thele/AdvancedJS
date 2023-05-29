@@ -1,0 +1,254 @@
+<!--***************BUILDING MY OWN ANALYTICS************-->
+<!doctype html>
+<html>
+
+<head>
+    <title>JS Tester</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box" id="box0">Box #1</div>
+        <div class="box" id="box1">Box #2</div>
+        <div class="box" id="box2">Box #3</div>
+        <div class="box" id="box3">Box #4</div>
+    </div>
+    <!-Because the boxes are contained in a single div
+    the function is invoked in every box above it
+as it makes part of the main variable ->
+    <script>
+        const counter = [];
+        const main = document.querySelector(".container");
+        main.addEventListener("click", tracker);
+
+        function tracker(e) {
+            const el = e.target;
+
+            if (el.id) {
+                const temp = {};
+                //temp declared asan empty object
+                temp.content = el.textContent;
+                //all content in content must display in the temp objects
+                temp.id = el.id;
+                temp.tagName = el.tagName;
+                temp.class = el.className;
+                console.dir(el);
+                //properties willbe printed into console regarding the webpage 
+                counter.push(temp);
+                //push temp object into counter array
+                console.log(counter);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
+
+
+<!--***************STAR RATER SYSTEM************-->
+<!--DOCTYPE html>
+<html>
+
+<head>
+    <title>Star Rater</title>
+    <style>
+        .stars ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .star {
+            font-size: 2em;
+            color: #ddd;
+            display: inline-block;
+        }
+
+        .orange {
+            color: orange;
+        }
+
+        .output {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="stars">
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+    </ul>
+    <div class="output"></div>
+    <script>
+        const starsUL = document.querySelector(".stars");
+        const output = document.querySelector(".output");
+        const stars = document.querySelectorAll(".star");
+        stars.forEach((star, index) => {
+            star.starValue = (index + 1);
+            star.addEventListener("click", starRate);
+            //every time star is clicked invokes function
+            //event listener can be added in a forEach loop
+        });
+        function starRate(e) {
+            //pass it a parameter when we want the function to apply to all elements 
+            output.innerHTML =
+                `You Rated this ${e.target.starValue} stars`;
+            stars.forEach((star, index) => {
+                if (index < e.target.starValue) {
+                    star.classList.add("orange");
+                    //adds orange CSS attribute to the clicked star
+                } else {
+                    star.classList.remove("orange");
+                    //doesn't allow user to rate higher than 5 stars
+                }
+            });
+        }
+    </script>
+</body>
+
+</html-->
+
+
+<!--***************MOUSE POSITION TRACKER************-->
+<!--DOCTYPE html>
+<html>
+
+<head>
+    <title>Complete JavaScript Course</title>
+    <style>
+        .holder {
+            display: inline-block;
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .active {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="holder">
+        <div id="output"></div>
+    </div>
+    <script>
+        const ele = document.querySelector(".holder");
+        ele.addEventListener("mouseover",
+            (e) => { e.target.classList.add("active"); });
+            //when mouse is in holder active CSS attribute is applied
+        ele.addEventListener("mouseout",
+            (e) => { e.target.classList.remove("active"); });
+        ele.addEventListener("mousemove", coordin);
+           //when the mouse over the holder the coordinates are displayed
+           //in the id output div 
+           //function coordin is invoked
+        function coordin() {
+            let html = "X:" + event.clientX + " | Y:" + event.clientY;
+            //event.clientX and event.clientY show positions of x and y-axis compred to webpage size
+            document.getElementById("output").innerHTML = html;
+            //output div innerHTML  is updated depending on the mouse position
+        }
+    </script>
+</body>
+
+</html-->
+
+
+<!--**************BOX CLICKER SPEED TEST GAME*************
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Click Me Game</title>
+    <style>
+        .output {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+            text-align: center;
+        }
+
+        .box {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            top: 50px;
+            left: 20%;
+            background-color: red;
+        }
+
+        .message {
+            text-align: center;
+            padding: 10px;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="output"></div>
+    <div class="message"></div>
+    <script>
+        output = document.querySelector('.output');
+        const message = document.querySelector('.message');
+        message.textContent = "Press to Start";
+        //text added to message
+        const box = document.createElement('div');
+        //box div is created and CSS attributes are applied
+        const game = {
+            timer: 0,
+            start: null
+        };
+        //game object with starting-values added 
+        box.classList.add('box');
+        //class box is added to box  
+        output.append(box);
+        //box is added to output 
+        box.addEventListener('click', (e) => {
+            box.textContent = "";
+            box.style.display = 'none';
+            game.timer = setTimeout(addBox, ranNum(3000));
+            //ranNum function added with a max of 3000 miliseconds(3 seconds)
+            if (!game.start) {
+                message.textContent = 'Loading....';
+            } else {
+                const cur = new Date().getTime();
+                //current time 
+                const dur = (cur - game.start) / 1000;
+                //game duration
+                message.textContent = `It took ${dur} seconds to click`;
+            }
+        });
+        function addBox() {
+            message.textContent = 'Click it...';
+            game.start = new Date().getTime();
+            //game starts at the current time
+            box.style.display = 'block';
+            box.style.left = ranNum(450) + 'px';
+            box.style.top = ranNum(450) + 'px';
+            //changes CSS for the block to move randomly in the game container
+        }
+        function ranNum(max) {
+            return Math.floor(Math.random() * max);
+            //ranNum is gets random number until max is passed
+        }
+    </script>
+</body>
+
+</html>
+-->

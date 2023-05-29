@@ -1,0 +1,214 @@
+<!--*****************************EMAIL EXTRACTOR******************
+<!doctype html>
+<html>
+
+<head>
+    <title>Complete JavaScript Course</title>
+</head>
+
+<body>
+    <textarea name="txtarea" rows=2 cols=50></textarea>
+    <button>Get Emails</button>
+    <textarea name="txtarea2" rows=2 cols=50></textarea>
+    <script>
+        let area1 = document.querySelector('textarea[name="txtarea"]');
+        let area2 = document.querySelector('textarea[name="txtarea2"]');
+        document.querySelector('button').addEventListener('click',lookUp);
+        function lookUp() {
+            const rawTxt = area1.value;
+            //what has been input
+            const eData = rawTxt.match(
+                /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+                //does input match the email format (regex expression)
+            );
+            const holder = [];
+            for (let x = 0; x < eData.length; x++) {
+                if (holder.indexOf(eData[x]) == -1) {
+                    //push  area1 value that matches format
+                    holder.push(eData[x]);
+                }
+            }
+            area2.value = holder.join(',');
+        }
+
+    </script>
+</body>
+
+</html>
+-->
+
+<!--**************FORM VALIDATOR*************
+<!doctype html>
+<html>
+
+<head>
+    <title>JavaScript Course</title>
+    <style>
+        .hide {
+            display: none;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.8em;
+            font-family: sans-serif;
+            font-style: italic;
+        }
+
+        input {
+            border-color: #ddd;
+            width: 400px;
+            display: block;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <form name="myform"> Email :
+        <input type="text" name="email"> <span class="error hide"></span>
+        <br> Password :
+        <input type="password" name="password"> <span class="error hide"></span>
+        <br> User Name :
+        <input type="text" name="userName"> <span class="error hide"></span>
+        <br>
+        <input type="submit" value="Sign Up">
+    </form>
+    <script>
+        const myForm = document.querySelector("form");
+        const inputs = document.querySelectorAll("input");
+        const errors = document.querySelectorAll(".error");
+        const required = ["email", "userName"];
+        //shortcuts to HTML elements created
+        myForm.addEventListener("submit", validation);
+        //eventListener submit envokes validator function
+        function validation(e) {
+            let data = {};
+            e.preventDefault();
+            errors.forEach(function (item) {
+                item.classList.add("hide");
+            });
+            let error = false;
+            //once the form is submitted the error becomes false 
+            //so the form is cleared 
+            inputs.forEach(function (el) {
+                let tempName = el.getAttribute("name");
+                if (tempName != null) {
+                    el.style.borderColor = "#ddd";
+                    if (el.value.length == 0 &&
+                        required.includes(tempName)) {
+                        addError(el, "Required Field", tempName);
+                        error = true;
+                    }
+                    if (tempName == "email") {
+                        let exp = /([A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A - Za - z0 - 9] +) \w + /;
+                        let result = exp.test(el.value);
+                        if (!result) {
+                            addError(el, "Invalid Email", tempName);
+                            error = true;
+                        }
+                    }
+                    //errors displayed if input doesnt match regex
+                    if (tempName == "password") {
+                        let exp = /[A-Za-z0-9]+$/;
+                        let result = exp.test(el.value);
+                        if (!result) {
+                            addError(el, "Only numbers and Letters",
+                                tempName);
+                            error = true;
+                        }
+                        if (!(el.value.length > 3 && el.value.length < 9)) {
+                            addError(el, "Needs to be between 3-8 " +
+                                "characters", tempName);
+                            error = true;
+                        }
+                        //once errors have been displayed to user it turns to true
+                        //function has been invoked
+                        //ensures that the password is strong 
+                    }
+                    data[tempName] = el.value;
+                }
+                //tracks data creation
+            });
+            if (!error) {
+                myForm.submit();
+                //no. 9
+                //submit form once no errors are present
+            }
+        }
+        function addError(el, mes, fieldName) {
+            let temp = el.nextElementSibling;
+            temp.classList.remove("hide");
+            //error will display
+            temp.textContent = fieldName.toUpperCase() + " " + mes;
+            el.style.borderColor = "red";
+            el.focus();
+            //styling for input field with error 
+        }
+    </script>
+</body>
+
+</html>
+-->
+
+
+
+<!--**************SIMPLE MATH QUIZ*************-->
+<!doctype html>
+<html>
+
+<head>
+    <title>Complete JavaScript Course</title>
+</head>
+
+<body>
+    <span class="val1"></span> <span>+</span> <span class="val2"></span> = <span>
+        <input type="text" name="answer"></span><button>Check</button>
+    <div class="output"></div>
+    <script>
+        const app = function () {
+            const game = {};
+            const val1 = document.querySelector(".val1");
+            const val2 = document.querySelector(".val2");
+            const output = document.querySelector(".output");
+            const answer = document.querySelector("input");
+            //declared HTML elements as JS objects
+            function init() {
+                document.querySelector("button").addEventListener(
+                    "click", checker);
+                    //invokes checker once button is clicked
+                loadQuestion();
+                //invokes loadQuestion function
+            }
+            function ranValue(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) +
+                    min);
+                    //once min and max are determined t gives range for possible terms 
+            }
+            function loadQuestion() {
+                game.val1 = ranValue(1, 100);
+                game.val2 = ranValue(1, 100);
+                //values are generated between given range
+                game.answer = game.val1 + game.val2;
+                val1.textContent = game.val1;
+                val2.textContent = game.val2;
+                //values will display on webpage 
+            }
+            function checker() {
+                let bg = answer.value == game.answer ? "green" : "red";
+                output.innerHTML += `<div style="color:${bg}">${game.val1} + ${game.val2} = ${game.answer} (${answer.value})</div>`;
+                answer.value = "";
+                loadQuestion();
+                //outputs questions and keeps track of results (question 8)
+                //input field then gets cleared and new question loads (question 9)
+            }
+            return {
+                init: init
+            };
+        }();
+        document.addEventListener('DOMContentLoaded', app.init);
+        //question 2(initializes app once page loads)
+    </script>
+</body>
+
+</html>

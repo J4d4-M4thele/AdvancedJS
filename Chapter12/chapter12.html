@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immediate JS</title>
+</head>
+
+<body>
+    <script src="chapter12.js">
+        
+    </script>
+</body>
+
+</html>
+
+<!--***************EXERCISE 12.1*******************
+<!doctype html>
+<html>
+<head>
+<title>Complete JavaScript Course</title>
+</head>
+<body>
+<div id="output">Complete JavaScript Course</div>
+Search for:
+<input id="sText" type="text">
+<br> Replace with:
+<input id="rText" type="text">
+<br>
+<button>Replace</button>
+<script>
+    const input1 = document.querySelector('#sText');
+    const input2 = document.querySelector('#rText');
+    const output = document.querySelector('div');
+    const button = document.querySelector('button');
+    button.addEventListener('click', lookup);
+    function lookup() {
+        let search = new RegExp(input1.value, 'gi');
+        //regular expression constructor= new RegExp(inside of //, 'gi')
+        let val1 = input1.value;
+        let rep = input2.value;
+        //can only search for something's value once the information has been entered
+        let a = output.textContent;
+        if (a.match(search)) {
+            let newValue = a.replace(search,rep)
+            output.textContent = newValue;
+        }
+    }
+</script>
+</body>
+</html>-->
+
+
+<!--***************EXERCISE 12.2*****************
+<!doctype html>
+<html>
+
+<head>
+    <title>JavaScript Course</title>
+</head>
+
+<body>
+    <div class="output"></div>
+    <input type="text" placeholder="Enter Email">
+    <button>Check</button>
+    <script>
+        const input = document.querySelector('input');
+        const output = document.querySelector('.output');
+        const button = document.querySelector('button');
+        let emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
+        button.addEventListener('click', check);
+        function check() {
+            let email = input.value;
+            let valid = emailPattern.test(email);
+            //test returns true or false 
+            if (!valid) {
+                response = 'Email format is incorrect';
+                output.style.color = 'red';
+            }
+            else {
+                response = 'Email format is correct';
+                output.style.color = 'green';
+            }
+            output.textContent = response;
+        }
+    </script>
+</body>
+
+</html>-->
+
+<!--***************LOCAL STORAGE**************-->
+<!--DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immediate JS</title>
+</head>
+
+<body>
+    <div id="stored"></div>
+    <script>
+        // let message = 'Hello storage!';
+        //localStorage.setItem('example2', 'Hey there!');
+        //item is stored on local storage so even w/o line 107 and 108 it works
+        // if (localStorage.getItem("example2")) {
+        //     document.getElementById("stored").innerHTML = localStorage.getItem("example");
+        // }
+        //if item exists in storage put inner HTML of stored
+        //window.localStorage.removeItem('example2');
+       console.log(localStorage.getItem(window.localStorage.key(0)));
+    </script>
+</body>
+
+</html-->
+
+
+<!--*************EXERCISE 12.7***************-->
+<!--doctype html>
+<html>
+
+<head>
+    <title>JavaScript</title>
+    <style>
+        .ready {
+            background-color: #ddd;
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <input placeholder="New Item" value="test item" maxlength="30">
+        <button>Add</button>
+    </div>
+    <ul class="output">
+    </ul>
+    <script>
+        const div = document.querySelector('.main');
+        const input = document.querySelector('.main input');
+        //refer to the classthe element is in to be more specific
+        const button = document.querySelector()
+        const output = document.querySelector('.output');
+        const task = JSON.parse(localStorage.getItem('tasklist')) || [];
+        button.addEventListener('click', craeteListItem);
+        if (tasks.length > 0) {
+            tasks.forEach((task) => {
+                genItem(task.val, task.checked);
+            });
+        }
+        function saveTasks() {
+            localStorage.setItem("tasklist", JSON.stringify(tasks));
+        }
+        function buildTasks() {
+            tasks.length = 0;
+            const curList = output.querySelectorAll("li");
+            curList.forEach((el) => {
+                const tempTask = {
+                    val: el.textContent,
+                    checked: false
+                };
+                if (el.classList.contains("ready")) {
+                    tempTask.checked = true;
+                }
+                tasks.push(tempTask);
+            });
+            saveTasks();
+        }
+        function genItem(val, complete) {
+            const li = document.createElement("li");
+            const temp = document.createTextNode(val);
+            li.appendChild(temp);
+            output.append(li);
+            userTask.value = "";
+            if (complete) {
+                li.classList.add("ready");
+            }
+            li.addEventListener("click", (e) => {
+                li.classList.toggle("ready");
+                buildTasks();
+            });
+            return val;
+        }
+        function createListItem() {
+            const val = userTask.value;
+            if (val.length > 0) {
+                const myObj = {
+                    val: genItem(val, false),
+                    checked: false
+                };
+                tasks.push(myObj);
+                saveTasks();
+            }
+        }
+    </script>
+</body>
+
+</html-->

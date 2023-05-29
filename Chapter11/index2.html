@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+
+<body>
+    <script>
+        let q = window.location.search;
+        let params = new URLSearchParams(q);
+        let name = params.get("first");
+        let surname = params.get("last");
+        let age = params.get("age");
+        console.log(name,surname,age);
+        //call all to the console
+    </script>
+</body>
+
+</html>

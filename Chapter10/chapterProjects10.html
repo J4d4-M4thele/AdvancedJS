@@ -1,0 +1,250 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Projects</title>
+</head>
+<body>
+    <script src="chapterProjects10.js"></script>
+</body>
+</html-->
+
+
+<!--***************COLLAPSIBLE ACCORDIAN COMPONENT**********-->
+<!--doctype html>
+<html>
+
+<head>
+    <title>JS Tester</title>
+    <style>
+        .active {
+            display: block !important;
+        }
+
+        .myText {
+            display: none;
+        }
+
+        .title {
+            font-size: 1.5em;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Title #1</div>
+        <div class="myText">Just some text #1</div>
+        <div class="title">Title #2</div>
+        <div class="myText">Just some text #2</div>
+        <div class="title">Title #3</div>
+        <div class="myText">Just some text #3</div>
+    </div>
+    <script>
+        let title = document.querySelectorAll('.title');
+        let text = document.querySelectorAll('.myText');
+        title.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                console.log(el.nextElementSibling);
+                //once .title is clicked it will display the next tag which is .myText
+                remover();
+                el.nextElementSibling.classList.toggle("active");
+                //when the next title is clicked it'll close the open one
+                //reversing the function
+            })
+        })
+        function remover() {
+            text.forEach((a) => {
+                a.classList.remove('active');
+                //does the opposite by removing the active everytime the next element is clicked
+            })
+        }
+    </script>
+</body>
+
+</html-->
+
+
+<!--*************INTERACTIVE VOTING SYSTEM***********-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Complete JavaScript Course</title>
+</head>
+
+<body>
+    <div id="message">Complete JavaScript Course</div>
+    <div>
+        <input type="text" id="addFriend">
+        <input type="button" id="addNew" value="Add Friend">
+    </div>
+    <table id="output"></table>
+    <script>
+        let myArray = ['Tyeishia', 'Moesha', 'Chantelle', 'Keyshia'];
+        let message = document.getElementById('message');
+        let input1 = document.getElementById('addFriend');
+        let input2 = document.getElementById('addNew');
+        let output = document.getElementById('output');
+        //adding shortcuts to each page element
+        input2.onclick = function () {
+            let newFriend = input1.value;
+            adder(newFriend, myArray.length, 0);
+            myArray.push(newFriend);
+            //once button is clicked it will add the persons name
+            //it pushes it to the array
+        }
+        function build() {
+            myArray.forEach((item, index) => {
+                adder(item, index, 0);
+                //adds items into the output
+            })
+        }
+        function adder(name, index, counter) {
+            const tr = document.createElement("tr");
+            const td1 = document.createElement("td");
+            td1.classList.add("box");
+            td1.textContent = index + 1; //column 1(index)
+            const td2 = document.createElement("td");
+            td2.textContent = name; //column 2(name typed)
+            const td3 = document.createElement("td");
+            td3.textContent = counter;  //column 3(counter- set at zero)
+            tr.append(td1);
+            tr.append(td2);
+            tr.append(td3);
+            tr.onclick = function () {
+                console.log(tr.lastChild);
+                let val = Number(tr.lastChild.textContent);
+                val++;
+                tr.lastChild.textContent = val;
+            }
+            output.appendChild(tr);
+        }
+        //adder prints names, indexes and counters to the output table 
+    </script>
+</body>
+
+</html>
+
+
+<!--************HANGMAN*************-->
+<!--doctype html>
+<html>
+
+<head>
+    <title>Hangman Game</title>
+    <style>
+        .gameArea {
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .box,
+        .boxD {
+            display: inline-block;
+            padding: 5px;
+        }
+
+        .boxE {
+            display: inline-block;
+            width: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gameArea">
+        <div class="score"> </div>
+        <div class="puzzle"></div>
+        <div class="letters"></div>
+        <button>Start Game</button>
+    </div>
+    <script>
+        const game = { cur: "", solution: "", puzz: [], total: 0 };
+        //game setup as an object 
+        const myWords = ["learn Javascript", "learn html",
+            "learn css"];
+            //answer words 
+        const score = document.querySelector(".score");
+        const puzzle = document.querySelector(".puzzle");
+        const letters = document.querySelector(".letters");
+        const btn = document.querySelector("button");
+        //shortcuts created for page elements 
+        btn.addEventListener("click", startGame);
+        function startGame() {
+            if (myWords.length > 0) {
+                btn.style.display = "none";
+                game.puzz = [];
+                game.total = 0;
+                game.cur = myWords.shift();
+                game.solution = game.cur.split("");
+                builder();
+            } else {
+                score.textContent = "No More Words.";
+            }
+        }
+        //once start game is clicked the letters and the letter positions are displayed
+        function createElements(elType, parentEle, output, cla) {
+            const temp = document.createElement(elType);
+            temp.classList.add("boxE");
+            parentEle.append(temp);
+            temp.textContent = output;
+            return temp;
+        }
+        function updateScore() {
+            score.textContent = `Total Letters Left : ${game.total}`;
+            if (game.total <= 0) {
+                console.log("game over");
+                score.textContent = "Game Over";
+                btn.style.display = "block";
+            }
+        }
+        //counts down until word has been completed
+        function builder() {
+            letters.innerHTML = "";
+            puzzle.innerHTML = "";
+            game.solution.forEach((lett) => {
+                let div = createElements("div", puzzle, "-", "boxE");
+                if (lett == " ") {
+                    div.style.borderColor = "white";
+                    div.textContent = " ";
+                } else {
+                    game.total++;
+                }
+                game.puzz.push(div);
+                updateScore();
+            })
+            for (let i = 0; i < 26; i++) {
+                let temp = String.fromCharCode(65 + i);
+                let div = createElements("div", letters, temp, "box");
+                let checker = function (e) {
+                    div.style.backgroundColor = "#ddd";
+                    div.classList.remove("box");
+                    div.classList.add("boxD");
+                    div.removeEventListener("click", checker);
+                    checkLetter(temp);
+                }
+                div.addEventListener("click", checker);
+            }
+        }
+        function checkLetter(letter) {
+            console.log(letter);
+            game.solution.forEach((ele, index) => {
+                if (ele.toUpperCase() == letter) {
+                    game.puzz[index].textContent = letter;
+                    game.total--;
+                    updateScore();
+                };
+            });
+            
+        }
+    </script>
+</body>
+
+</html-->
