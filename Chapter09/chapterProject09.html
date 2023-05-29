@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Project</title>
+</head>
+
+<body>
+    <div class="output">
+        <h1>Hello</h1>
+        <div>Test</div>
+        <ul>
+            <li id="one">One</li>
+            <li class="red">Two</li>
+        </ul>
+        <div>Test</div>
+    </div>
+    <script>
+      let output = document.querySelector('.output');
+      let mainList = document.querySelector('ul');
+      mainList.id = 'mainList';
+      let el = document.getElementsByTagName('div');
+      console.log(el);
+      for(let i=0;i < el.length; i++) {
+        console.log(el[i].tagName);
+        //adding  numerical value to each list tag
+      el[i].id = 'id' + (i + 1);
+      //if i is divisible by 2 it alternates the text colour of the inner HTML
+      if (i % 2) {
+        el[i].style.color = 'red';
+      }else {
+        el[i].style.color = 'blue';
+      }
+      
+      }
+    </script>
+</body>
+
+</html>
